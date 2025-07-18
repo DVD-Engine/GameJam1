@@ -4,14 +4,12 @@ using UnityEngine.InputSystem.Editor;
 public class CameraMovement : MonoBehaviour{
 
     //Sensitivity floats
-    public float sensX;
-    public float sensY;
+    public float sensX, sensY;
 
     public Transform orientation;
 
     //Positioning
-    float rotationX;
-    float rotationY;
+    float rotationX, rotationY;
         
     private void Start(){
         Cursor.lockState = CursorLockMode.Locked;
@@ -27,7 +25,7 @@ public class CameraMovement : MonoBehaviour{
         rotationX = Mathf.Clamp(rotationX, -90f, 90f);
 
         transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-        orientation.rotation = Quaternion.Euler(0, rotationY, rotationX);
+        orientation.rotation = Quaternion.Euler(0, rotationY, 0);
 
     }
 }
