@@ -1,17 +1,14 @@
 using UnityEngine;
-using UnityEngine.InputSystem.Editor;
 
-public class CameraMovement : MonoBehaviour{
+public class CameraMovement : MonoBehaviour {
 
-    //Sensitivity floats
     public float sensX, sensY;
 
     public Transform orientation;
 
-    //Positioning
     float rotationX, rotationY;
-        
-    private void Start(){
+
+    private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -29,3 +26,4 @@ public class CameraMovement : MonoBehaviour{
 
     }
 }
+
