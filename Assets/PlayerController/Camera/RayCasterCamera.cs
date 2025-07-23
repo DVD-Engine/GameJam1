@@ -14,7 +14,7 @@ public class RayCasterCamera : MonoBehaviour
     public KeyCode dropBind = KeyCode.Q;
     public KeyCode useBind = KeyCode.Mouse0;
 
-    public GrabberController GrabberController;
+    public GrabberController grabberController;
 
 
 
@@ -24,15 +24,17 @@ public class RayCasterCamera : MonoBehaviour
     void Update()
     {
         Ray ray = new(transform.position, transform.forward);
+
+
         if (Physics.Raycast(ray, out RaycastHit hitInfo, rayDistance, isInteractable))
         {
-            HandleRayCastHit(hitInfo);
-            if (Input.GetKeyDown(pickBind) && !GrabberController.HasItem())
+            currentTarget = hitInfo.collider.gameObject;
+            if (Input.GetKeyDown(pickBind) && !grabberController.HasItem())
             {
                 IUsableItem usableItem = currentTarget.GetComponent<IUsableItem>();
                 if (usableItem != null)
                 {
-                    GrabberController.PickUp(currentTarget);
+                    grabberController.PickUp(currentTarget);
                 }
             }
         }
@@ -41,21 +43,32 @@ public class RayCasterCamera : MonoBehaviour
             currentTarget = null;
         }
 
-        if(Input.GetKeyDown(dropBind) && GrabberController.HasItem())
+        if (Input.GetKeyDown(dropBind) && grabberController.HasItem())
         {
-            GrabberController.Drop();
+            grabberController.Drop();
         }
 
-        if(Input.GetMouseButtonDown(0) && GrabberController.HasItem()) {
-            GrabberController.UseHeldItem();
+        if (Input.GetMouseButtonDown(0) && grabberController.HasItem())
+        {
+            grabberController.UseHeldItem();
         }
 
-    }
+        if (Physics.Raycast(ray, out RaycastHit hit, .8f) && Input.GetMouseButtonDown(0))
+        {
+            GameObject target = hit.collider.gameObject;
 
-    void HandleRayCastHit(RaycastHit hitInfo)
-    {
-        currentTarget = hitInfo.collider.gameObject;
-        Debug.Log(currentTarget.GetComponent<MonoBehaviour>());
+            if (grabberController.HasItem())
+            {
+                GameObject heldItem = grabberController.getHeldObject();
+
+                IUsableOnThings usableOn = heldItem.GetComponent<IUsableOnThings>();
+
+                if (usableOn != null)
+                {
+                    usableOn.UseOn(target);
+                }
+            }
+        }
 
 
     }

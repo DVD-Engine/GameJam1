@@ -122,5 +122,10 @@ public class GrabberController : MonoBehaviour
             Debug.Log("No item to use.");
         }
     }
+
+    public GameObject getHeldObject()
+    {
+        return grabbedObject;
+    }
 }
     

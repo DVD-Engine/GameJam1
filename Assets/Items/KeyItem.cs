@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyItem : MonoBehaviour, IUsableItem
+public class KeyItem : MonoBehaviour, IUsableItem, IUsableOnThings
 {
 
-    public string Name;
+    public string keyName;
     public string description;
-    public GameObject targetDoor;
+    public GameObject targetKeyhole;
     void Start()
     {
 
@@ -24,14 +24,14 @@ public class KeyItem : MonoBehaviour, IUsableItem
 
     public string GetName()
     {
-        return name;
+        return keyName;
     }
 
     public Dictionary<string, string> GetStats()
     {
         return new Dictionary<string, string>
         {
-            {"Opens", targetDoor != null ? targetDoor.name : "Unknow"},
+            {"Opens", targetKeyhole != null ? targetKeyhole.name : "Unknow"},
         };
     }
 
@@ -47,7 +47,19 @@ public class KeyItem : MonoBehaviour, IUsableItem
 
     public void Use()
     {
-        Debug.Log("Opening:" + targetDoor.name);
+        Debug.Log("Use() called but key needs a target!");
+    }
+
+    public void UseOn(GameObject gameObject)
+    {
+       if(targetKeyhole != null)
+        
+       {
+            KeyholScript keyhole = targetKeyhole.GetComponent<KeyholScript>();
+            
+            keyhole.Insert(this.gameObject);
+       }
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
