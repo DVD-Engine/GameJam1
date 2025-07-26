@@ -53,7 +53,7 @@ public class RayCasterCamera : MonoBehaviour
             grabberController.UseHeldItem();
         }
 
-        if (Physics.Raycast(ray, out RaycastHit hit, .8f) && Input.GetMouseButtonDown(0))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1.2f) && Input.GetMouseButtonDown(0))
         {
             GameObject target = hit.collider.gameObject;
 
